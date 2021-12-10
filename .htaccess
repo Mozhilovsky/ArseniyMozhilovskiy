@@ -3,3 +3,35 @@
   AddType application/x-httpd-ea-php70___lsphp .php .php7 .phtml .htm .html
 </IfModule>  
 # php -- END cPanel-generated handler, do not edit
+
+<?php
+
+$token = "5033213464:AAFVuJy3jh2-JNUGoJ-l9d01Cx3WeDa4E5U";
+
+$chat_id = "-786921113";
+
+if ($_POST['act'] == 'order') {
+    $name = ($_POST['name']);
+    $phone = ($_POST['phone']);
+
+    $arr = array(
+        'Имя:' => $name,
+        'Телефон:' => $phone
+    );
+
+    foreach($arr as $key => $value) {
+        $txt .= "<b>".$key."</b> ".$value."%0A";
+    };
+
+    $sendToTelegram = fopen("https://api.telegram.org/bot{$token}/sendMessage?chat_id={$chat_id}&parse_mode=html&text={$txt}","r");
+
+    if ($sendToTelegram) {
+        alert('Спасибо! Ваша заявка принята. Мы свяжемся с вами в ближайшее время.');
+    }
+
+    else {
+        alert('Что-то пошло не так. ПОпробуйте отправить форму ещё раз.');
+    }
+}
+
+?>
